@@ -8,6 +8,7 @@ def get_character_movies_from_api(character_name)
   # Parse THAT web request into a new variable
   response_hash = JSON.parse(response_string)
 
+
   # Search through each result of the array inside of response hash
   response_hash["results"].each do |character_hash|
 
@@ -42,7 +43,34 @@ def print_movies(films)
     # string interpolation of the film hash at the title level
     puts "#{i+1} #{film}"
   end
+
+    film_array = []
+  response_hash["results"].each do |character_hash| #response_hash["results"] is an array
+
+    if character_name == character_hash['name'].downcase
+
+     character_hash["films"].each do |film|
+       film_string = RestClient.get(film)
+       films = JSON.parse(film_string)
+
+       film_array << films
+         # puts film["title"]
+      end
+    end
+  end
+  film_array
 end
+
+ def print_movies(films)
+
+   # puts films["title"]
+   films.each_with_index do |film, i|
+   puts "#{i +1} #{film["title"]}"
+   # binding.pry
+# #   # some iteration magic and puts out the movies in a nice list
+
+end
+ end
 
 def show_character_movies(character)
   films = get_character_movies_from_api(character)
