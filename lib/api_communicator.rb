@@ -22,6 +22,7 @@ def get_character_movies_from_api(character_name)
           film_string = RestClient.get(film)
           # adds that film name into an array  (after parsed)
           film_hash = JSON.parse(film_string)
+          # Adds the titles of the films to "films" array
           films << film_hash["title"]
 
         end
@@ -29,12 +30,10 @@ def get_character_movies_from_api(character_name)
         return films
       end
     end
-
 end
 
 def print_movies(films)
   #passes in films from show_character_movies method
-  #
   # sets up iteration for each film
   films.each_with_index do |film, i|
     #print divider
@@ -43,34 +42,18 @@ def print_movies(films)
     # string interpolation of the film hash at the title level
     puts "#{i+1} #{film}"
   end
-
-    film_array = []
-  response_hash["results"].each do |character_hash| #response_hash["results"] is an array
-
-    if character_name == character_hash['name'].downcase
-
-     character_hash["films"].each do |film|
-       film_string = RestClient.get(film)
-       films = JSON.parse(film_string)
-
-       film_array << films
-         # puts film["title"]
-      end
-    end
-  end
-  film_array
 end
 
- def print_movies(films)
+ #def print_movies(films)
 
    # puts films["title"]
-   films.each_with_index do |film, i|
-   puts "#{i +1} #{film["title"]}"
+   #films.each_with_index do |film, i|
+   #puts "#{i +1} #{film["title"]}"
    # binding.pry
 # #   # some iteration magic and puts out the movies in a nice list
 
-end
- end
+#end
+ #end
 
 def show_character_movies(character)
   films = get_character_movies_from_api(character)
